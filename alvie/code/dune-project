@@ -1,0 +1,21 @@
+(lang dune 3.1)
+
+(name alvie)
+
+(generate_opam_files true)
+
+(authors "Matteo Busi, Riccardo Focardi, Flaminia Luccio")
+(maintainers "Matteo Busi, Riccardo Focardi, Flaminia Luccio")
+
+(license LICENSE)
+
+(package
+ (name alvie)
+ (synopsis "Code accompanying the paper \"Bridging the Gap: Automated Analysis of Sancus
+\" to appear at IEEE CSF 2024")
+ (description "")
+ (depends ocaml dune)
+ (tags
+  ("automata learning" "formal verification" "sancus" "side-channels" "alvie")))
+
+; See the complete stanza docs at https://dune.readthedocs.io/en/stable/dune-files.html#dune-project

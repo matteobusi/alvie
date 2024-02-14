@@ -1,0 +1,3 @@
+[submodule "sancus-core-gap"]
+	path = sancus-core-gap
+	url = https://github.com/martonbognar/sancus-core-gap
