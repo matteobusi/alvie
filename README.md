@@ -33,6 +33,12 @@ $ docker run --rm -it matteobusi/alvie_csf24
 ```
 Once everything is ready a prompt should be waiting for your commands.
 
+If you wish to build the Docker image, you can run the following command:
+```
+$ docker build --platform linux/amd64 -t alvie
+```
+The argument `--platform linux/amd64` is needed to build the image on ARM machines because the mCRL2 model checker is not available for ARM yet.
+
 # Running the found attacks
 
 Once the container is ready, you can run the following command to check that the attacks reported in the paper are synthesized correctly and actually break the security of the relevant Sancus versions (the full test requires a few minutes):
