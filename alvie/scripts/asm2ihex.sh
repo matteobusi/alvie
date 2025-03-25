@@ -48,9 +48,9 @@ if [ -z "$MSPGCC_PFX" ]; then
 fi
 
 # If on MacOS, used gsed
-# if [[ "$OSTYPE" == "darwin"* ]]; then
-#     alias sed="gsed"
-# fi
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    alias sed="gsed"
+fi
 
 
 ###############################################################################

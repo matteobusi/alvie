@@ -74,7 +74,7 @@ let make ~sancus_repo ~sancus_master_key ~commit ~workingdir ~tmpdir ~basename ~
     String.substr_replace_all submit_template ~pattern:"{{tmp_dir}}" ~with_:r_tmpdir in
       Out_channel.write_all submitfile_filled ~data:submit_filled;
   (* Compile the Verilog testbench beforehand *)
-  let res = Sys_unix.command (Format.sprintf "%s \"%s\" %s %s %s" verilog_compile r_tmpdir basename submitfile_filled ">/dev/null 2>/dev/null") in
+  let res = Sys_unix.command (Format.sprintf "%s \"%s\" %s %s %s" verilog_compile r_tmpdir basename submitfile_filled (dbg_str ())) in
   if res <> 0 then
     failwith (Format.sprintf "Error: %s returned %d." verilog_compile res)
   else (
@@ -251,6 +251,7 @@ let addr_of_label cfg l =
 
 let run_simulator (cfg : cfg_t) =
   (* Call build_pmem to compile and link the code *)
+  Logs.debug (fun p -> p "Run simulator: %s =============================" (Format.sprintf "%s \"%s\" %s %s" cfg.pmem_script cfg.tmpdir cfg.basename (dbg_str ())));
   let res = Sys_unix.command (Format.sprintf "%s \"%s\" %s %s" cfg.pmem_script cfg.tmpdir cfg.basename (dbg_str ())) in
   if res <> 0 then
     failwith (Format.sprintf "Error: %s returned %d." cfg.pmem_script res)
@@ -332,16 +333,16 @@ let analyse_dump (diverges : bool) (cfg : cfg_t) (labels : (string * string) lis
   Logs.debug (fun p -> p "Verilog.analyse_dump: labels: %s" ([%derive.show: (string*string) list] labels));
   let annot_pcs = List.map labels ~f:(fun (s, e) -> addr_of_label cfg s, addr_of_label cfg e) in
   let pc_to_label (s, e) = List.find_exn labels ~f:(fun (s', e') -> s = addr_of_label cfg s' && e = addr_of_label cfg e') in
-  let pc_map = Vcd.get_signal dump "TOP.tb_openMSP430.inst_pc[15:0]" in
-  let irq_map = Vcd.get_signal dump "TOP.tb_openMSP430.msp_debug_0.irq" in
-  let inst_number_map = Vcd.get_signal dump "TOP.tb_openMSP430.inst_number[31:0]" in
-  let sm_executing_map = Vcd.get_signal dump "TOP.tb_openMSP430.dut.frontend_0.sm_executing" in
-  let e_state_map = Vcd.get_signal dump "TOP.tb_openMSP430.dut.e_state[4:0]" in
-  let r4_map = Vcd.get_signal dump "TOP.tb_openMSP430.r4[15:0]" in
-  let gie_map = Vcd.get_signal dump "TOP.tb_openMSP430.gie" in
-  let timerA_map = Vcd.get_signal dump "TOP.tb_openMSP430.timerA_0.tar[15:0]" in
-  (* let pmem_map = Vcd.get_signal dump "TOP.tb_openMSP430.mem240[15:0]" in *)
-  let umem_map = Vcd.get_signal dump "TOP.tb_openMSP430.mem250[15:0]" in
+  let pc_map = Vcd.get_signal dump "tb_openMSP430.inst_pc[15:0]" in
+  let irq_map = Vcd.get_signal dump "tb_openMSP430.msp_debug_0.irq" in
+  let inst_number_map = Vcd.get_signal dump "tb_openMSP430.inst_number[31:0]" in
+  let sm_executing_map = Vcd.get_signal dump "tb_openMSP430.dut.frontend_0.sm_executing" in
+  let e_state_map = Vcd.get_signal dump "tb_openMSP430.dut.e_state[4:0]" in
+  let r4_map = Vcd.get_signal dump "tb_openMSP430.r4[15:0]" in
+  let gie_map = Vcd.get_signal dump "tb_openMSP430.gie" in
+  let timerA_map = Vcd.get_signal dump "tb_openMSP430.timerA_0.tar[15:0]" in
+  (* let pmem_map = Vcd.get_signal dump "tb_openMSP430.mem240[15:0]" in *)
+  let umem_map = Vcd.get_signal dump "tb_openMSP430.mem250[15:0]" in
   (* Logs.debug (fun m -> m "reg_map : [%s]\n" (List.to_string (Int.Map.to_alist r4_map.tv) ~f:(fun (k, v) -> sprintf "%d, %s;" k v)));
   Logs.debug (fun m -> m "gie_map : [%s]\n" (List.to_string (Int.Map.to_alist gie_map.tv) ~f:(fun (k, v) -> sprintf "%d, %s;" k v)));
   Logs.debug (fun m -> m "timerA_map : [%s]\n" (List.to_string (Int.Map.to_alist timerA_map.tv) ~f:(fun (k, v) -> sprintf "%d, %s;" k v))); *)
