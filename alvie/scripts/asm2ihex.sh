@@ -107,7 +107,8 @@ fi
 ###############################################################################
 echo ""
 echo "\$ $MSPGCC_PFX-as      -alsm $2 -o $1.o > $1.l43"
-$MSPGCC_PFX-as   -I ../../src/gap-attacks -I $8 --defsym "__SECRET=${__SECRET}"  -alsm $2   -o $1.o     > $1.l43
+$MSPGCC_PFX-as -mcpu=430 -I ../../src/gap-attacks -I $8 -alsm $2   -o $1.o     > $1.l43
+# $MSPGCC_PFX-as -mcpu=430 -mY -I ../../src/gap-attacks -I $8 --defsym "__SECRET=${__SECRET}"  -alsm $2   -o $1.o     > $1.l43
 echo "\$ $MSPGCC_PFX-objdump -xdsStr $1.o >> $1.l43"
 $MSPGCC_PFX-objdump -xdsStr       $1.o              >> $1.l43
 

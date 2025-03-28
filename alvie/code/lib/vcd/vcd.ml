@@ -42,6 +42,6 @@ let vcd (filename : string) =
   }
 
 let get_signal (v : vcd_t) (signal : string) =
-  List.iter v.full_names_to_tv ~f:(fun (fn, _) -> Logs.debug (fun p -> p "(looking %s) %s\n" signal fn));
+  (* List.iter v.full_names_to_tv ~f:(fun (fn, _) -> Logs.debug (fun p -> p "(looking %s) %s\n" signal fn)); *)
   let _, tv = List.find_exn v.full_names_to_tv ~f:(fun (fn, _) -> String.equal fn signal) in
     Signal.make ~tv:tv
