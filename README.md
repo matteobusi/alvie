@@ -40,7 +40,7 @@ Once everything is ready a prompt should be waiting for your commands.
 
 If you wish to build the Docker image, you can run the following command:
 ```
-$ docker build --platform linux/amd64 -t alvie
+$ docker build --platform linux/amd64 -t alvie .
 ```
 The argument `--platform linux/amd64` is needed to build the image on ARM machines because the mCRL2 model checker is not available for ARM yet.
 
