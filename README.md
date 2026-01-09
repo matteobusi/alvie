@@ -1,10 +1,15 @@
 # ALVIE tool
 
 This is the source code of the ALVIE tool, accompanying the paper:
-    "Bridging the Gap: Automated Analysis of Sancus" by M. Busi, R. Focardi, F. Luccio
-To appear at IEEE CSF 2024.
 
-This project was inspired by [Bognar et al., "Mind the Gap: Studying the Insecurity of Provably Secure Embedded Trusted Execution Architectures"](https://mici.hu/papers/bognar22gap.pdf) appeared at IEEE S&P'22, and tries to reproduce their results automatically and to discover new attacks/anomalies in the Sancus processor.
+> ["Bridging the Gap: Automated Analysis of Sancus"](https://ieeexplore.ieee.org/abstract/document/10664425) by Matteo Busi, Riccardo Focardi, and Flaminia Luccio ([arXiv version](https://arxiv.org/abs/2404.09518))
+
+
+The project was inspired by the paper
+
+> ["Mind the Gap: Studying the Insecurity of Provably Secure Embedded Trusted Execution Architectures"](https://mici.hu/papers/bognar22gap.pdf) by Marton Bognar, Jo Van Bulck, and Frank Piessens
+
+and aims to reproduce their results automatically and to discover new attacks/anomalies in the Sancus processor.
 
 # Structure of the project
 
